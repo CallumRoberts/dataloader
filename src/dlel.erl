@@ -9,7 +9,7 @@
 %%%===================================================================
 
 start(_StartType, _StartArgs) ->
-    case dlel_sup:start_link(star_wars) of
+    case dlel_sup:start_link() of
 	{ok, Pid} ->
 	    {ok, Pid};
 	Error ->
