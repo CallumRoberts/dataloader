@@ -10,7 +10,7 @@
          terminate/2,
  	 code_change/3]).
 
--record(state, { promise_map }).
+-record(state, { promise_map, timer_ref }).
 -define(TIMER, 300). 
 
 
@@ -50,9 +50,9 @@ handle_call({batch_load, Object}, _From, #state { promise_map = Map } = State) -
     TimerRef = erlang:send_after(?TIMER, self(), timeout),
     Fun = (fun(Objs) -> {Objs, Token} end),
     Entries = lists:map(Fun, Object),              
-    Promise = store_promise(Entries, Map, TimerRef),
+    Promise = store_promise(Entries, Map),
     Reply = {batch_load_token, Token},
-    {reply, Reply, State#state { promise_map = Promise }};
+    {reply, Reply, State#state { promise_map = Promise, timer_ref = TimerRef }};
 handle_call(_, _From, State) ->
     {reply, {error, unknown_call}, State}.
 
@@ -78,17 +78,17 @@ code_change(_OldVsn, State, _Extra) ->
 generate_token() ->
     make_ref().
 
-store_promise([], Map, TimerRef) -> erlang:cancel_timer(TimerRef),
-				Map;
-store_promise([{Object, Token} | Entries], Map, TimerRef) ->  
+store_promise([], Map) -> Map;
+store_promise([{Object, Token} | Entries], Map) ->  
     case maps:find(Object, Map) of 
 	error ->
-	    store_promise(Entries, Map#{ Object => [Token] }, TimerRef);
+	    store_promise(Entries, Map#{ Object => [Token] });
 	{ok, OtherTokens} ->
-	    store_promise(Entries, Map#{ Object := [Token | OtherTokens] }, TimerRef)
+	    store_promise(Entries, Map#{ Object := [Token | OtherTokens] })
     end.
 
-handle_sync(State = #state{ promise_map = Map }) ->
+handle_sync(State = #state{ promise_map = Map, timer_ref = TimerRef }) ->
+    erlang:cancel_timer(TimerRef),
     ListedData = maps:to_list(Map),
     Reply = get_reply(ListedData, [], ets_cache),
     ok = reply_back(Reply),

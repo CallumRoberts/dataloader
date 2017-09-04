@@ -2,7 +2,7 @@
 -behaviour(supervisor).
 
 %% API
--export([start_link/1]).
+-export([start_link/0]).
 
 %% Supervisor Callbacks
 -export([init/1]).
@@ -12,7 +12,7 @@
 -type start_link_err() :: {already_started, pid()} | shutdown | term().
 -type start_link_ret() :: {ok, pid()} | ignore | {error, start_link_err()}.
 
--spec start_link(atom()) -> start_link_ret().
+-spec start_link() -> start_link_ret().
 start_link() ->
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
