@@ -1,4 +1,4 @@
-# dlel #
+# DLEL #
 
 (DataLoader Erlang Libary) 
 An OTP library
