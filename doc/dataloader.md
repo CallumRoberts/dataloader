@@ -1,12 +1,13 @@
 
 
+__Authors:__ Callum Roberts `csr@shopgun.com`
+
 # Module dataloader #
 * [Function Index](#index)
 * [Function Details](#functions)
 
 dataloader API.
 
-__Authors:__ Callum Roberts `csr@shopgun.com`
 
 <a name="index"></a>
 
