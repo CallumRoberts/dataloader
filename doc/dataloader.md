@@ -1,6 +1,6 @@
 
 
-__Authors:__ Callum Roberts `csr@shopgun.com`
+__Author:__ Callum Roberts `csr@shopgun.com`
 
 # Module dataloader #
 * [Function Index](#index)
@@ -21,15 +21,6 @@ dataloader API.
 | <a href="#request_complete-1">request_complete/1</a> | stops batching and replys back to callers |
 
 
-
-
-
-
-
-
-
-
-
 <a name="functions"></a>
 
 ## Function Details ##
@@ -37,6 +28,16 @@ dataloader API.
 <a name="start_link-0"></a>
 
 ### start_link/0 ###
+
+`start_link() -> {ok, Pid} | {error, Reason}`
+
+Initilizes a dataloader process.
+
+This function return the Pid in which the process is live on.
+
+
+
+
 
 
 <a name="stop-1"></a>
