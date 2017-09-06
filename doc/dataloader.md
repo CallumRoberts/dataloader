@@ -27,22 +27,25 @@ dataloader API.
 
 <a name="start_link-0"></a>
 
+
 ### start_link/0 ###
 
 `start_link() -> {ok, Pid} | {error, Reason}`
 
 Initilizes a dataloader process.
 
-This function return the Pid in which the process is live on.
-
-
-
-
+This function returns the Pid in which the process is live on.
 
 
 <a name="stop-1"></a>
 
 ### stop/1 ###
+
+`stop(Pid) -> ok | error`
+
+stops the dataloader alive on specified Pid.
+
+Returns ok on successful shutdown of the dataloader process.
 
 
 <a name="batch_load-2"></a>
