@@ -3,8 +3,6 @@
 (DataLoader Erlang Libary) 
 An OTP library
 
-build:
-`$ rebar3 compile`
 
 
 ## Modules ##
