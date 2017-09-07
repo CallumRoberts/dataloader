@@ -52,7 +52,27 @@ Returns ok on successful shutdown of the dataloader process.
 
 ### batch_load/2 ###
 
+`batch_load(Pid, [Object]) -> {batch_load_token, Ref} | error`
+
+`Object = {NameToken, ID}`
+
+`NameToken = {token, self(), make_ref()}`
+
+Takes a Pid of a specific dataloader process and a list of Objects.
+
+Returns a promise token on success. 
+
 
 <a name="request_complete-1"></a>
 
 ### request_complete/1 ###
+
+`request_complete(Pid) -> {ok, [Reply]} | error`
+
+`Reply = {ID, Val, NameToken, PromiseToken}`
+
+Returns a list of replys for each Object in the batch load.
+
+`flush()`
+
+Can also be used to view what was sent back to the caller.
