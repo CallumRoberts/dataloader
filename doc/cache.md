@@ -39,4 +39,23 @@ Initilizes the cache process.
 This function returns the Pid in which the process is live on.
 
 
+<a name="get_val-2"></a>
+
+### get_val/2 ###
+
+
+
+<a name="clear_id-2"></a>
+
+### clear_id/2 ###
+
+
+
+<a name="clear_all-1"></a>
+
+### clear_all/1 ###
+
+
+
+
 
