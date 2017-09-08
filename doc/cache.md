@@ -43,13 +43,12 @@ This function returns the Pid in which the process is live on.
 
 ### get_val/2 ###
 
-`get_val(Pid, ID) -> Val`
+`get_val(Pid, ID) -> Val | null`
 
-Returns the value of the corresponding ID in the arg. 
+Will return `Val` if ID found or `null` otherwise, the return value is saved to cache.
 
-On success this function looks up Val based on ID, in database and save it to cache. 
+This fuction takes the arg of the Pid the Cache is alive on, and an ID value.
 
-Will return `Val` if found or `null` otherwise.
 
 
 ## Issues ##
