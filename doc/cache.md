@@ -50,23 +50,18 @@ Will return `Val` if ID found or `null` otherwise, the return value is saved to 
 This fuction takes the arg of the Pid the Cache is alive on, and an ID value.
 
 
-
-## Issues ##
-
-recently discovered that the following functions when used don't clear anything from the cache. 
-
-(fix will be in progress soon)
-
-
 <a name="clear_id-2"></a>
 
 ### clear_id/2 ###
 
+`clear_id(Pid, ID) -> `
 
 
 <a name="clear_all-1"></a>
 
 ### clear_all/1 ###
+
+`clear_all(all) -> `
 
 
 
