@@ -17,7 +17,7 @@ Dataloader Cache API.
 | Function      | Desc          |
 |---------------|---------------|
 | <a href="#start_link-0">start_link/0</a> | Init cache |
-| <a href="#get_val-2">get_val/2</a> | Looks up ID in database and save returned Val in cache |
+| <a href="#get_val-2">get_val/2</a> | Looks up ID in database and adds returned Val in cache |
 | <a href="#clear_id-2">clear_id/2</a> | Clears the ID and corresponding val from the cache if it exsists |
 | <a href="#clear_all-1">clear_all/1</a> | Clears out the entire cache  |
 
