@@ -45,6 +45,12 @@ This function returns the Pid in which the process is live on.
 
 
 
+## Issues ##
+
+recently discovered that these functions when used don't clear anything from the cache. 
+
+(fix will be in progress soon)
+
 <a name="clear_id-2"></a>
 
 ### clear_id/2 ###
