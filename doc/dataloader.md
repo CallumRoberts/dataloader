@@ -34,7 +34,7 @@ dataloader API.
 
 Initilizes a dataloader process.
 
-This function returns the Pid in which the process is live on.
+This function returns the `Pid` in which the process is live on.
 
 
 <a name="stop-1"></a>
@@ -45,7 +45,7 @@ This function returns the Pid in which the process is live on.
 
 stops the dataloader alive on specified Pid.
 
-Returns ok on successful shutdown of the dataloader process.
+Returns `ok` on successful shutdown of the dataloader process.
 
 
 <a name="batch_load-2"></a>
