@@ -1,7 +1,7 @@
 -module(ets_cache).
 -behaviour(gen_server).
 
--export([start_link/0, clear_id/2, clear_all/1, get_val/2]).
+-export([start_link/0, clear_id/2, clear_all/1, get_val/2, search_val/2]).
 
 -export([init/1, 
 	 handle_call/3, 
@@ -26,6 +26,9 @@ start_link() ->
 get_val(Pid, ID) ->
     gen_server:call(Pid, {get_val, ID}).
 
+search_val(Pid, ID) ->
+    gen_server:call(Pid, {search_val, ID}).
+
 %% clears the ID and corresponding val from the cache if it exsists
 clear_id(Pid, ID) ->
     gen_server:call(Pid, {clear_cache_id, ID}).
@@ -47,12 +50,15 @@ init([]) ->
 handle_call({get_val, ID}, _From, #state{} = State ) ->
     Reply = new_val(ID),
     {reply, Reply, State#state {}};
+handle_call({search_val, ID}, _From, #state{} = State ) ->
+    Reply = lookup(ID),
+    {reply, Reply, State#state {}};
 handle_call({clear_cache_id, ID}, _From, #state{} = State ) ->
-    clear_cache_id(ID),
-    {reply, {ok, cleared_id_from_cache}, State#state {}};
+    Reply = clear_cache_id(ID),
+    {reply, Reply, State#state {}};
 handle_call(clear_cache_all, _From, #state{} = State ) ->
     clear_cache_all(),
-    {reply, {ok, cleared_all_from_cache}, State#state {}}.
+    {reply, {ok, cleared_all}, State#state {}}.
 
 handle_cast(_Msg, State) ->
     {noreply, State}.
@@ -73,6 +79,11 @@ code_change(_OldVsn, State, _Extra) ->
 %% INTERNAL FUNCTIONS %%
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+
+init_cache() ->
+    ets:new(cache_table, [named_table, {read_concurrency, true}, public, {write_concurrency, true}]),
+    ok.
+
 new_val(ObjectID) ->
     case hydra_client_test:object_get(ObjectID, undefined) of
 	{error, not_found} ->
@@ -85,18 +96,22 @@ new_val(ObjectID) ->
 	    ets:insert(cache_table, {ObjectID, NewVal}),
 	    NewVal
     end.	    
-    
-init_cache() ->
-    ets:new(cache_table, [named_table, {read_concurrency, true}, public, {write_concurrency, true}]),
-    ok.
+
+lookup(ID) ->
+    case ets:lookup(cache_table, ID) of
+	[] ->
+	    {error, ID, not_found};
+	[{_ID, Val}] ->
+	    {ok, Val}
+    end.
 
 clear_cache_id(ID) ->
     case ets:lookup(cache_table, ID) of
 	[] -> 
-	    {error, ID, not_found_in_cache};
+	    {error, ID, not_found};
 	[{ID, _Val}] ->
 	    ets:delete(cache_table, ID),
-	    {ok, ID, removed_from_cache}
+	    {ok, ID, removed}
     end.
 
 clear_cache_all() ->
