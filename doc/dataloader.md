@@ -73,6 +73,4 @@ Returns a promise token on success.
 
 Returns a list of replys for each Object in the batch load.
 
-`flush()`
-
-Can also be used to view what was sent back to the caller.
+`flush()` Can also be used to view what was sent back to the caller.
